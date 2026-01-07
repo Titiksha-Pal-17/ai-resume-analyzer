@@ -1,7 +1,9 @@
-
-import ResumeCard from "~/components/ResumeCard";
 import type { Route } from "./+types/home";
 import Navbar from "~/components/Navbar";
+import ResumeCard from "~/components/ResumeCard";
+import { resumes} from '~/constants';
+import {Link, useNavigate} from "react-router";
+import {useEffect, useState} from "react";
 
 
 
@@ -22,14 +24,13 @@ export default function Home() {
     <Navbar />
 
     <section className="main-section">
-      <div className="page-heading">
+      <div className="page-heading py-16">
         <h1>Track Your Applications and Resume Ratings</h1>
         <h2>Review your submissions and check Ai-powered feedback.</h2>
       </div>
-    </section>
 
 
-    {resumes.length > 0 && (
+      {resumes.length > 0 && (
         <div className="resumes-section">
           {resumes.map((resume) => (
               <ResumeCard key={resume.id} resume={resume} />
@@ -37,7 +38,8 @@ export default function Home() {
         </div>
       )}
 
-    
-    
+    </section>
+
+
   </main>;
 }
