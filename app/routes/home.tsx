@@ -5,6 +5,9 @@ import { resumes} from '~/constants';
 import {Link, useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 
+import {usePuterStore} from "~/lib/puter";
+
+
 
 
 
@@ -19,7 +22,14 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+    const{ auth}=usePuterStore();
+    const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!auth.isAuthenticated) navigate('/auth?next=/');
+  },[auth.isAuthenticated]);
+
+  return <main className="bg-[url('/images/bg-main.svg')] bg-cover ">
 
     <Navbar />
 
@@ -29,7 +39,7 @@ export default function Home() {
         <h2>Review your submissions and check Ai-powered feedback.</h2>
       </div>
 
-
+      /* resume cards in line those images */
       {resumes.length > 0 && (
         <div className="resumes-section">
           {resumes.map((resume) => (
