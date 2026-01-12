@@ -4,12 +4,12 @@ import { formatSize } from "~/lib/utils";
 
 interface FileUploaderProps {
     onFileSelect?: (file: File | null) => void;
+    id?: string; // ✅ Added this to fix the error
 }
 
-const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
+const FileUploader = ({ onFileSelect, id }: FileUploaderProps) => { // ✅ Accept 'id' here
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const file = acceptedFiles[0] || null;
-
         onFileSelect?.(file);
     }, [onFileSelect]);
 
@@ -24,13 +24,12 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
 
     const file = acceptedFiles[0] || null;
 
-
-
     return (
         <div className="w-full gradient-border">
             <div {...getRootProps()}>
-                <input {...getInputProps()} />
-
+                {/* ✅ Pass the ID to the hidden input so the label works */}
+                <input {...getInputProps({ id })} /> 
+                
                 <div className="space-y-4 cursor-pointer">
                     {file ? (
                         <div className="uploader-selected-file" onClick={(e) => e.stopPropagation()}>
