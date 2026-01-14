@@ -16,4 +16,10 @@ export default defineConfig({
       "~/constants": path.resolve(__dirname, "./constants"),
     },
   },
+  // 👇 ADD THIS BLOCK TO FIX THE CRASH
+  define: {
+    'process.env': {},       // Stubs process.env so libs don't crash
+    'process.title': '"browser"', // Stubs process.title specifically (fixes your error)
+    'process.version': '""', // Stubs version just in case
+  },
 });
