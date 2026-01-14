@@ -7,6 +7,9 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+// 1. Import the Analytics component
+import { Analytics } from "@vercel/analytics/react";
+
 import type { Route } from "./+types/root";
 import "./app.css";
 import { usePuterStore } from "./lib/puter";
@@ -26,9 +29,9 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { init }=usePuterStore();
+  const { init } = usePuterStore();
 
-  useEffect(()=>{
+  useEffect(() => {
     init()
   }, [init]);
 
@@ -45,6 +48,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        
+        {/* 2. Add the component here at the end of the body */}
+        <Analytics />
       </body>
     </html>
   );
@@ -54,6 +60,7 @@ export default function App() {
   return <Outlet />;
 }
 
+// ... ErrorBoundary stays the same ...
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
