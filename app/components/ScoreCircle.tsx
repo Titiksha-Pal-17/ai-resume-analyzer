@@ -1,4 +1,6 @@
-const ScoreCircle = ({ score = 75 }: { score: number }) => {
+import React from 'react';
+
+const ScoreCircle = ({ score = 75, size = 100 }: { score: number; size?: number }) => {
     const radius = 40;
     const stroke = 8;
     const normalizedRadius = radius - stroke / 2;
@@ -7,16 +9,16 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
     const strokeDashoffset = circumference * (1 - progress);
 
     return (
-        <div className="relative w-
-        [100px] h
-        -[100px]">
+        <div
+            className="relative flex items-center justify-center"
+            style={{ width: size, height: size }}
+        >
             <svg
                 height="100%"
                 width="100%"
                 viewBox="0 0 100 100"
                 className="transform -rotate-90"
             >
-                {/* Background circle */}
                 <circle
                     cx="50"
                     cy="50"
@@ -25,13 +27,14 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
                     strokeWidth={stroke}
                     fill="transparent"
                 />
-                {/* Partial circle with gradient */}
+
                 <defs>
                     <linearGradient id="grad" x1="1" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#FF97AD" />
                         <stop offset="100%" stopColor="#5171FF" />
                     </linearGradient>
                 </defs>
+
                 <circle
                     cx="50"
                     cy="50"
@@ -45,9 +48,20 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
                 />
             </svg>
 
-            {/* Score and issues */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-semibold text-sm">{`${score}/100`}</span>
+            {/* Score Text Section */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
+                {/* Adjusted fontSize to size * 0.18.
+                   This makes the text slightly smaller relative to the circle, 
+                   preventing it from overlapping the ring.
+                */}
+                <div className="flex items-baseline font-bold text-gray-800" style={{ fontSize: size * 0.18 }}>
+                    <span>
+                        {score}
+                    </span>
+                    <span className="ml-0.5">
+                        /100
+                    </span>
+                </div>
             </div>
         </div>
     );
